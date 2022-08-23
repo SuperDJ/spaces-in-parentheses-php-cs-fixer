@@ -6,12 +6,21 @@ namespace SuperDJ\SpacesInParenthesesFixer\Tests\Fixer;
 
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use SuperDJ\SpacesInParenthesesFixer\Tests\AbstractFixerTestCase;
+use PhpCsFixer\Fixer\Whitespace\NoSpacesInsideParenthesisFixer;
 
 final class SpacesInParenthesesFixerTest extends AbstractFixerTestCase
 {
     public function testNameIsValid(): void
     {
         $this->assertRegExp('/^[A-Z][a-zA-Z0-9]*\/[a-z][a-z0-9_]*$/', $this->fixer->getName());
+    }
+
+    public function testPriorityMatches(): void
+    {
+        $this->assertEquals(
+            (new NoSpacesInsideParenthesisFixer)->getPriority(),
+            $this->fixer->getPriority()
+        );
     }
 
     public function testInvalidConfigMissingKey(): void
@@ -33,7 +42,7 @@ final class SpacesInParenthesesFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
-    public function testDefaultFix(string $expected, string|null $input = null): void
+    public function testDefaultFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
@@ -41,7 +50,7 @@ final class SpacesInParenthesesFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideSpacesFixCases
      */
-    public function testSpacesFix(string $expected, string|null $input = null): void
+    public function testSpacesFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input, ['space' => 'spaces']);
     }

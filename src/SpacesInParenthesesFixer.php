@@ -3,6 +3,7 @@
 namespace SuperDJ\SpacesInParenthesesFixer;
 
 use PhpCsFixer\AbstractFixer;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
@@ -13,13 +14,21 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Fixer\Whitespace\NoSpacesInsideParenthesisFixer;
+
+if(class_exists('ConfigurationDefinitionFixerInterface'))
+{
+    abstract class DynamicParent extends AbstractFixer implements ConfigurationDefinitionFixerInterface {}
+} else {
+    abstract class DynamicParent extends AbstractFixer implements ConfigurableFixerInterface {}
+}
 
 /**
  * @internal
  */
-final class SpacesInParenthesesFixer extends AbstractFixer implements ConfigurableFixerInterface
+final class SpacesInParenthesesFixer extends DynamicParent
 {
-    private string $singleLineWhitespaceOptions = " \t\n\r\0\x0B";
+    private $singleLineWhitespaceOptions = " \t\n\r\0\x0B";
 
     /**
      * {@inheritdoc}
@@ -65,7 +74,7 @@ function foo(\$bar, \$baz)
      */
     public function getPriority(): int
     {
-        return 2;
+        return (new NoSpacesInsideParenthesisFixer)->getPriority();
     }
 
     /**
