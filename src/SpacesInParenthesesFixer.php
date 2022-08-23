@@ -13,13 +13,14 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Fixer\Whitespace\NoSpacesInsideParenthesisFixer;
 
 /**
  * @internal
  */
 final class SpacesInParenthesesFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    private string $singleLineWhitespaceOptions = " \t\n\r\0\x0B";
+    private $singleLineWhitespaceOptions = " \t\n\r\0\x0B";
 
     /**
      * {@inheritdoc}
@@ -65,7 +66,7 @@ function foo(\$bar, \$baz)
      */
     public function getPriority(): int
     {
-        return 2;
+        return (new NoSpacesInsideParenthesisFixer)->getPriority();
     }
 
     /**

@@ -1,5 +1,7 @@
 # PHP CS Fixer: Spaces in parentheses fixer
 
+A custom [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) that fixes an [PR](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/5709).
+
 ## Installation
 
 Install it with the following command:

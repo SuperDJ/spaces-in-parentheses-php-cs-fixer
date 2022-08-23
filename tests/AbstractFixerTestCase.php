@@ -28,7 +28,7 @@ abstract class AbstractFixerTestCase extends TestCase
     use AssertRegExpTrait;
     use AssertSameTokensTrait;
 
-    protected FixerInterface $fixer;
+    protected $fixer;
 
     final protected function setUp(): void
     {
